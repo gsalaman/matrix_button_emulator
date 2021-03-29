@@ -24,7 +24,7 @@ class ButtonEmulator():
         self.buttons[i][j].grid(row=i, column=j)
 
   def button_press(self, button):
-    self.client.publish("jumbotron/button/press", button["text"])
+    self.client.publish("jumbotron/button/press", "P"+button["text"])
     print("press: "+button["text"])
 
 
