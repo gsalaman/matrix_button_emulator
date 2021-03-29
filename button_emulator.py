@@ -1,10 +1,16 @@
 from Tkinter import *
+import paho.mqtt.client as mqtt
 
 class ButtonEmulator():
   def __init__(self):
     self.window = Tk()
     self.window.title("Matrix Button Emulator")
     self.create_widgets()
+    self.client = mqtt.Client("Button_Emulator")
+    # note we don't need "on_message" because we only publish.
+
+    #self.client.connect("mqttbroker")
+    self.client.connect("broker.hivemq.com")
 
   def create_widgets(self):
     self.buttons = [[None for _ in range(8)] for _ in range(8)]
@@ -18,6 +24,7 @@ class ButtonEmulator():
         self.buttons[i][j].grid(row=i, column=j)
 
   def button_press(self, button):
+    self.client.publish("jumbotron/button/press", button["text"])
     print("press: "+button["text"])
 
 
